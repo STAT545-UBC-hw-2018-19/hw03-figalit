@@ -94,6 +94,8 @@ ggplot(trimmedMean, aes(x=year, y=tm)) +
   geom_line()
 ```
 
+**Fourth question**
+
 How is life expectancy changing over time on different continents?
 ```{r}
 data <- gapminder %>% 

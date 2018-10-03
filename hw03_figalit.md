@@ -164,6 +164,8 @@ ggplot(trimmedMean, aes(x=year, y=tm)) +
 
 ![](hw03_figalit_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
+**Fourth question**
+
 How is life expectancy changing over time on different continents?
 
 ``` r
