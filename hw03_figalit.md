@@ -1,5 +1,7 @@
-hw03\_figalit.Rmd
+HW 03 - figalit
 ================
+
+Always begin by loading necessary packages:
 
 ``` r
 suppressPackageStartupMessages(library(tidyverse))
@@ -10,7 +12,9 @@ library(ggplot2)
 Populating cheat sheet!
 -----------------------
 
-Get the maximum and minimum of GDP per capita for all continents.
+**First question**
+
+Getting the maximum and minimum of GDP per capita for all continents:
 
 ``` r
 # One way is to present them stacked on top of each other.
@@ -51,7 +55,7 @@ knitr::kable(minMaxData)
 | Oceania   |  10039.5956|   34435.37|
 
 ``` r
-# Let's plot out these points.
+# Let's plot out these points, just to see.
 ggplot(combinedMinMaxData, aes(x = continent, y = gdpPercap)) +
   geom_point()
 ```
@@ -67,9 +71,11 @@ ggplot(gapminder, aes(x = continent, y = gdpPercap)) +
 
 ![](hw03_figalit_files/figure-markdown_github/unnamed-chunk-2-2.png)
 
-Look at the spread of GDP per capita within the continents.
+**Second question**
 
-Answer: To understand spread, we need to look at different measures, like standard deviation or variance, median or quantiles. I have plotted some different ways of understanding this spread.
+Looking at the spread of GDP per capita within the continents.
+
+To understand spread, we need to look at different measures, like standard deviation or variance, median or quantiles. I have plotted some different ways of understanding this spread.
 
 ``` r
 # Some statistics: 
@@ -123,7 +129,40 @@ ggplot(gapminder, aes(x=continent, y=gdpPercap, fill=continent)) +
 
 ![](hw03_figalit_files/figure-markdown_github/unnamed-chunk-3-3.png)
 
-Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population. Just try something other than the plain vanilla mean.
+**Third question**
+
+Computing a trimmed mean of life expectancy for different years. Notice arranging by mean implicitly arranges by year, showing the increase of lifeExp as years go by, in a global scale.
+
+``` r
+trimmedMean <- gapminder %>%
+  group_by(year) %>%
+  summarize(tm = mean(lifeExp, trim=0.2)) %>%
+  arrange(tm)
+knitr::kable(trimmedMean)
+```
+
+|  year|        tm|
+|-----:|---------:|
+|  1952|  47.74866|
+|  1957|  50.64422|
+|  1962|  53.12857|
+|  1967|  55.63999|
+|  1972|  58.12370|
+|  1977|  60.38896|
+|  1982|  62.47444|
+|  1987|  64.48383|
+|  1992|  65.89072|
+|  1997|  66.84437|
+|  2002|  67.77385|
+|  2007|  69.17224|
+
+``` r
+ggplot(trimmedMean, aes(x=year, y=tm)) +
+  geom_point() +
+  geom_line()
+```
+
+![](hw03_figalit_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 How is life expectancy changing over time on different continents?
 
@@ -240,8 +279,12 @@ ggplot(gapminder, aes(x=continent, y=lifeExp, fill=continent)) +
 
 ![](hw03_figalit_files/figure-markdown_github/unnamed-chunk-5-2.png)
 
-Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy – you decide – a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
+*End of solution*
 
-Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
+### Future work
 
-Some things I found useful for this homework: [Merging data](https://www.statmethods.net/management/merging.html)
+Since this is a cheatsheet, I am adding the template for solving the remaining tasks(so I can complete them later). Ignore all this!
+
+-   Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: Compute some measure of worldwide life expectancy ??? you decide ??? a mean or median or some other quantile or perhaps your current age. Then determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
+
+-   Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
